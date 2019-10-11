@@ -2,7 +2,7 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Microservicio Hospedahe
+  title: Microservicio Hospedaje
   description: Javascript + MySQL
   license:
     name: Arquitectura de Software 2019-II
