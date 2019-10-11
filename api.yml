@@ -1,0 +1,563 @@
+#Test with: http://editor.swagger.io/
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservicio Hospedahe
+  description: Javascript + MySQL
+  license:
+    name: Arquitectura de Software 2019-II
+# host: 192.168.1.10:3000
+
+tags:
+- name: "Location"
+- name: "Lodging"
+- name: "Lodging Image"
+
+# schemes:
+#   - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /api/v1/location:
+    post:
+      tags:
+      - "Location"
+      summary: Registrar una nueva localización
+      operationId: createLocation
+      parameters:
+        - name: location
+          in: body
+          required: true
+          description: Location Object
+          schema:
+            $ref: '#/definitions/LocationInput'
+      responses:
+        '200':
+          description: Created
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    get:
+      tags:
+      - "Location"
+      summary: Retornar todos las localizaciones
+      operationId: getAllLocation
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/LocationList'
+        '406':
+          description: Not Acceptable (Invalid Params)
+        '500':
+          description: Internal Server Error
+
+  /api/v1/location/{code}:
+    get:
+      tags:
+      - "Location"
+      summary: Retorna la localización con el codigo dado
+      operationId: getLocationByCode
+      parameters:
+        - name: code
+          in: path
+          description: El codigo de la localizacion retornado
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Location'
+        '404':
+          description: Not Found
+        '406':
+            description: Not Acceptable (Invalid Params)
+        '500':
+          description: unexpected error
+
+    put:
+      tags:
+      - "Location"
+      summary: Actualiza la localización con el codigo dado
+      operationId: updateLocation
+      parameters:
+        - name: code
+          in: path
+          description: Codigo de la localización actualizada
+          required: true
+          type: integer
+        - name: Location
+          in: body
+          required: true
+          description: Location Object
+          schema:
+            $ref: '#/definitions/LocationInput'
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+        '406':
+            description: Not Acceptable (Invalid Params)
+        '500':
+          description: unexpected error
+
+    delete:
+      tags:
+      - "Location"
+      summary: Elimina la localización con el codigo dado
+      operationId: deleteLocation
+      parameters:
+        - name: code
+          in: path
+          description: Codigo de la localización a ser borrada
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Not Found
+        '406':
+            description: Not Acceptable (Invalid Params)
+        '500':
+          description: unexpected error
+
+
+  /api/v1/lodging:
+    post:
+      tags:
+      - "Lodging"
+      summary: Crear un Hospedaje
+      operationId: createLodging
+      parameters:
+        - name: lodging
+          in: body
+          required: true
+          description: Lodging Object
+          schema:
+            $ref: '#/definitions/LodgingInput'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    get:
+      tags:
+      - "Lodging"
+      summary: Retornar todos los hospedajes
+      operationId: getAllLodging
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/LodgingList'
+        '406':
+          description: Not Acceptable (Invalid Params)
+        '500':
+          description: Internal Server Error
+
+  /api/v1/lodging/{code}:
+    get:
+      tags:
+      - "Lodging"
+      summary: Retorna el hospedaje con el codigo dado
+      operationId: getLodgingByCode
+      parameters:
+        - name: code
+          in: path
+          description: El codigo del hospedaje retornado
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Lodging'
+        '404':
+          description: Not Found
+        '406':
+            description: Not Acceptable (Invalid Params)
+        '500':
+          description: unexpected error
+
+    put:
+      tags:
+      - "Lodging"
+      summary: Actualiza el hospedaje con el codigo dado
+      operationId: updateLodging
+      parameters:
+        - name: code
+          in: path
+          description: Codigo del hospedaje actualizado
+          required: true
+          type: integer
+        - name: Lodging
+          in: body
+          required: true
+          description: Lodging Object
+          schema:
+            $ref: '#/definitions/LodgingInput'
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+        '406':
+            description: Not Acceptable (Invalid Params)
+        '500':
+          description: unexpected error
+
+    delete:
+      tags:
+      - "Lodging"
+      summary: Elimina el hospedaje con el codigo dado
+      operationId: deleteLodging
+      parameters:
+        - name: code
+          in: path
+          description: Codigo del hospedaje a ser eliminado
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Not Found
+        '406':
+            description: Not Acceptable (Invalid Params)
+        '500':
+          description: unexpected error
+
+
+  /api/v1/lodging_image:
+    post:
+      tags:
+      - "Lodgin Image"
+      summary: Crear una imagen de un hospedaje
+      operationId: createLodgingImg
+      parameters:
+        - name: lodging_image
+          in: body
+          required: true
+          description: Lodging_image Object
+          schema:
+            $ref: '#/definitions/LodgingimgInput'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    get:
+      tags:
+      - "Lodging Image"
+      summary: Retornar todas las imagenes de hospedajes
+      operationId: getAllLodgingImg
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/LodgingimgList'
+        '406':
+          description: Not Acceptable (Invalid Params)
+        '500':
+          description: Internal Server Error
+
+  /api/v1/lodging_image/{code}:
+    get:
+      tags:
+      - "Lodging Image"
+      summary: Retorna la imagen de un hospedaje con el codigo dado
+      operationId: getLodgingImgByCode
+      parameters:
+        - name: code
+          in: path
+          description: El codigo de la imagen de un hospedaje retornado
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Lodgingimg'
+        '404':
+          description: Not Found
+        '406':
+            description: Not Acceptable (Invalid Params)
+        '500':
+          description: unexpected error
+
+    put:
+      tags:
+      - "Lodging Image"
+      summary: Actualiza la imagen de hospedaje con el codigo dado
+      operationId: updateLodgingimg
+      parameters:
+        - name: code
+          in: path
+          description: Codigo de la imagen de un hospedaje actualizado
+          required: true
+          type: integer
+        - name: Lodging Image
+          in: body
+          required: true
+          description: Lodging Image Object
+          schema:
+            $ref: '#/definitions/LodgingimgInput'
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+        '406':
+            description: Not Acceptable (Invalid Params)
+        '500':
+          description: unexpected error
+
+    delete:
+      tags:
+      - "Lodging Image"
+      summary: Elimina la imagen de un hospedaje con el codigo dado
+      operationId: deleteLodgingimg
+      parameters:
+        - name: code
+          in: path
+          description: Codigo de la imagen de un hospedaje a ser eliminado
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Not Found
+        '406':
+            description: Not Acceptable (Invalid Params)
+        '500':
+          description: unexpected error
+
+definitions:
+
+  # Location
+  Location:
+    type: object
+    properties:
+      code:
+        type: integer
+      country:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+
+
+  LocationInput:
+    type: object
+    properties:
+      country:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+
+  LocationList:
+    type: object
+    required:
+      - total
+      - list
+    properties:
+      total:
+        type: number
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/Location'
+          
+  Lodging:
+    type: object
+    properties:
+      code:
+        type: integer
+      host_id:
+        type: integer
+      lodging_name:
+        type: string
+      phone_number:
+        type: integer
+      lodging_type:
+        type: integer
+      lodging_class:
+        type: integer  
+      is_exclusive:
+        type: boolean  
+      is_company:
+        type: boolean  
+      guest_number:
+        type: integer  
+      rooms_number:
+        type: integer  
+      beds_number:
+        type: integer  
+      bathrooms_number:
+        type: integer  
+      location_id:
+        type: integer  
+      address:
+        type: string  
+      extra_address:
+        type: string  
+      time_before_guest:
+        type: integer  
+      time_arrive_start:
+        type: integer  
+      time_arrive_end:
+        type: integer  
+      with_wifi:
+        type: boolean  
+      with_cable_tv:
+        type: boolean  
+      with_air_conditioning:
+        type: boolean  
+      with_phone:
+        type: boolean 
+      with_kitchen:
+        type: boolean  
+      with_cleaning_items:
+        type: boolean  
+      price_per_person_and_nigth:
+        type: integer  
+      lodging_description:
+        type: string
+      lodging_provide:
+        type: integer
+      
+        
+  LodgingInput:
+    type: object
+    properties:
+      host_id:
+        type: integer
+      lodging_name:
+        type: string
+      phone_number:
+        type: integer
+      lodging_type:
+        type: integer
+      lodging_class:
+        type: integer  
+      is_exclusive:
+        type: boolean  
+      is_company:
+        type: boolean  
+      guest_number:
+        type: integer  
+      rooms_number:
+        type: integer  
+      beds_number:
+        type: integer  
+      bathrooms_number:
+        type: integer  
+      location_id:
+        type: integer  
+      address:
+        type: string  
+      extra_address:
+        type: string  
+      time_before_guest:
+        type: integer  
+      time_arrive_start:
+        type: integer  
+      time_arrive_end:
+        type: integer  
+      with_wifi:
+        type: boolean  
+      with_cable_tv:
+        type: boolean  
+      with_air_conditioning:
+        type: boolean  
+      with_phone:
+        type: boolean 
+      with_kitchen:
+        type: boolean  
+      with_cleaning_items:
+        type: boolean  
+      price_per_person_and_nigth:
+        type: integer  
+      lodging_description:
+        type: string
+      lodging_provide:
+        type: integer
+      
+  LodgingList:
+    type: object
+    required:
+      - total
+      - list
+    properties:
+      total:
+        type: number
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/Lodging'
+          
+  Lodgingimg:
+    type: object
+    properties:
+      code:
+        type: integer
+      lodging_id:
+        type: integer
+      url:
+        type: string
+      
+        
+  LodgingimgInput:
+    type: object
+    properties:
+      lodging_id:
+        type: integer
+      url:
+        type: string
+      
+  LodgingimgList:
+    type: object
+    required:
+      - total
+      - list
+    properties:
+      total:
+        type: number
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/Lodgingimg'
+
+# Errors
+  ErrorModel:
+    type: object
+    required:
+      - message
+      - code
+    properties:
+      message:
+        type: string
+      code:
+        type: number
+      description:
+        type: object
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /cfortizp/api/1.0.0
+schemes:
+ - https
+ - http

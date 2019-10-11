@@ -1,14 +1,10 @@
-version: '2'
-
-services:
-
-  user-ms:
+lodging-ms:
     build: .
     environment:
       NODE_ENV: production
       DATABASE_HOST: lodging-db
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: user
+      MYSQL_PORT: 3310
+      MYSQL_DATABASE: lodging
       MYSQL_USER: mysql
       MYSQL_PASSWORD: 1234
     ports:
