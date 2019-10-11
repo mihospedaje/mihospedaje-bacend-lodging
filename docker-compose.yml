@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+
+  user-ms:
+    build: .
+    environment:
+      NODE_ENV: production
+      DATABASE_HOST: lodging-db
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: user
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3030:3030"
+    depends_on:
+      - lodging-db
+
+  lodging-db:
+    build: ./db
+    environment:
+      MYSQL_DATABASE: lodging
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: 1234
+      DATABASE_HOST: lodging-db
+    ports:
+      - 3310:3310
+    restart: on-failure
