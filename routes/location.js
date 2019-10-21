@@ -15,7 +15,12 @@ module.exports = function (app) {
         const locationData = {
             location_id: parseInt(req.params.location_id)};
         Location.getlocationcode(locationData,(err, data) => {
-            res.status(200).json(data);
+            res.status(200).json({
+                location_id: data[0].location_id,
+                country: data[0].country,
+                city: data[0].city,
+                state: data[0].state
+            });
         });
     });
     app.post('/api/v1/location',[
@@ -34,9 +39,11 @@ module.exports = function (app) {
         console.log(locationData);
         Location.insertlocation(locationData, (err, data) => {
             if (data && data.insertId) {
-                res.json({
-                    success: true,
-                    data: locationData
+                res.status(201).json({
+                    location_id: data.insertId,
+                    country: locationData.country,
+                    city: locationData.city,
+                    state: locationData.state
                 })
             } else {
                 res.status(500).json({

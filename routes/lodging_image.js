@@ -16,7 +16,11 @@ module.exports = function (app) {
             lodging_image_id: parseInt(req.params.lodging_image_id)
             };
         LodgingImg.getlodgingimgcode(lodgingImgData,(err, data) => {
-            res.status(200).json(data);
+            res.status(200).json({
+                lodging_image_id: data[0].lodging_image_id,
+                lodging_id: data[0].lodging_id,
+                url: data[0].url
+            });
         });
     });
     app.post('/api/v1/lodging_image',/*[
@@ -34,9 +38,10 @@ module.exports = function (app) {
         console.log(lodgingImgData);
         LodgingImg.insertlodgingimg(lodgingImgData, (err, data) => {
             if (data && data.insertId) {
-                res.json({
-                    success: true,
-                    data: lodgingImgData
+                res.status(201).json({
+                    lodging_image_id: data.insertId,
+                    lodging_id: lodgingImgData.lodging_id,
+                    url: lodgingImgData.url
                 })
             } else {
                 res.status(500).json({
