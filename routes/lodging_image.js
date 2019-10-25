@@ -66,9 +66,10 @@ module.exports = function (app) {
 
         LodgingImg.updatelodgingimg(lodgingImgData, (err, data) => {
             if (data && data.message) {
-                res.json({
-                    success: true,
-                    data: lodgingImgData
+                res.status(201).json({
+                    lodging_image_id: lodgingImgData.lodging_image_id,
+                    lodging_id: lodgingImgData.lodging_id,
+                    url: lodgingImgData.url
                 })
             } else {
                 res.status(500).json({
