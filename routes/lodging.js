@@ -162,9 +162,34 @@ module.exports = function (app) {
 
             Lodging.updatelodging(lodgingData, (err, data) => {
                 if (data && data.message) {
-                    res.json({
-                        success: true,
-                        data: lodgingData
+                    res.status(201).json({
+                        lodging_id: lodgingData.lodging_id,
+                        host_id: lodgingData.host_id,
+                        lodging_name: lodgingData.lodging_name,
+                        phone_number: lodgingData.phone_number,
+                        lodging_type: lodgingData.lodging_type,
+                        lodging_class: lodgingData.lodging_class,
+                        is_exclusive: lodgingData.is_exclusive,
+                        is_company: lodgingData.is_company,
+                        guest_number: lodgingData.guest_number,
+                        rooms_number: lodgingData.rooms_number,
+                        beds_number: lodgingData.beds_number,
+                        bathrooms_number: lodgingData.bathrooms_number,
+                        location_id: lodgingData.location_id,
+                        address: lodgingData.address,
+                        extra_address: lodgingData.extra_address,
+                        time_before_guest: lodgingData.time_before_guest,
+                        time_arrive_start: lodgingData.time_arrive_start,
+                        time_arrive_end: lodgingData.time_arrive_end,
+                        with_wifi: lodgingData.with_wifi,
+                        with_cable_tv: lodgingData.with_cable_tv,
+                        with_air_conditioning: lodgingData.with_air_conditioning,
+                        with_phone: lodgingData.with_phone,
+                        with_kitchen: lodgingData.with_kitchen,
+                        with_cleaning_items: lodgingData.with_cleaning_items,
+                        price_per_person_and_nigth: lodgingData.price_per_person_and_nigth,
+                        lodging_description: lodgingData.lodging_description,
+                        lodging_provide: lodgingData.lodging_provide
                     })
                 } else {
                     res.status(500).json({
