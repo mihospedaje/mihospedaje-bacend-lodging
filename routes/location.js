@@ -71,9 +71,11 @@ module.exports = function (app) {
 
         Location.updatelocation(locationData, (err, data) => {
             if (data && data.message) {
-                res.json({
-                    success: true,
-                    data: locationData
+                res.status(201).json({
+                    location_id: locationData.location_id,
+                    country: locationData.country,
+                    city: locationData.city,
+                    state: locationData.state
                 })
             } else {
                 res.status(500).json({
