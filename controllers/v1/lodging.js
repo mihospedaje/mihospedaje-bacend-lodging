@@ -8,12 +8,33 @@ connection = mysql.createConnection({
     password        : process.env.MYSQL_PASSWORD,
     database        : process.env.MYSQL_DATABASE
 });
+/*var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : 'root',
+    database : 'lodging'
+  });*/
 
 let Lodging_Model = {};
 Lodging_Model.getlodging = (callback) => {
     if (connection) {
         connection.query(
             'SELECT * FROM lodging ORDER BY lodging_id',
+            (err, rows) => {
+                if (err) {
+                    throw err
+                } else {
+                    callback(null, rows)
+                }
+            }
+        )
+    }
+}
+
+Lodging_Model.getlodgingname = (find,callback) => {
+    if (connection) {
+        connection.query(
+            'SELECT * FROM lodging where lodging_name like ?',"%"+find+"%",
             (err, rows) => {
                 if (err) {
                     throw err

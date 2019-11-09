@@ -47,6 +47,17 @@ module.exports = function (app) {
             });
         });
     });
+    app.get('/api/v1/lodging/name/:find', (req, res) => {
+        console.log("params: ", req.params.find);
+        Lodging.getlodgingname(req.params.find,(err, data) => {
+            if(err){
+                throw err
+            }else{
+                res.status(200).json(data);
+            }
+            
+        });
+    });
     app.post('/api/v1/lodging',/*[
         check('country').isString(),
         check('city').isString(),
