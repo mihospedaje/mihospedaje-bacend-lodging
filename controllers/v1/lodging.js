@@ -45,7 +45,20 @@ Lodging_Model.getlodgingname = (find,callback) => {
         )
     }
 }
-
+Lodging_Model.getlodgingByUser = (userid,callback) => {
+    if (connection) {
+        connection.query(
+            'SELECT * FROM lodging where host_id = ?',userid,
+            (err, rows) => {
+                if (err) {
+                    throw err
+                } else {
+                    callback(null, rows)
+                }
+            }
+        )
+    }
+}
 Lodging_Model.getlodgingcode = (lodgingData,callback) => {
     if (connection) {
         connection.query(
