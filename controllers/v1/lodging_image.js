@@ -14,8 +14,8 @@ var connection = mysql.createConnection({
     user     : 'root',
     password : 'root',
     database : 'lodging'
-  });
-*/
+  });*/
+
 let LodgingImgModel = {};
 LodgingImgModel.getlodgingimg = (callback) => {
     if (connection) {

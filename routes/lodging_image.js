@@ -11,6 +11,17 @@ module.exports = function (app) {
             res.status(200).json(data);
         });
     });
+    app.get('/api/v1/lodging_image/lodging/:lodging_id', (req, res) => {
+        console.log("params: ", req.params.lodging_id);
+        LodgingImg.getimagelodging(req.params.lodging_id,(err, data) => {
+            if(err){
+                throw err
+            }else{
+                res.status(200).json(data);
+            }
+            
+        });
+    });
     app.get('/api/v1/lodging_image/:lodging_image_id', (req, res) => {
         const lodgingImgData = {
             lodging_image_id: parseInt(req.params.lodging_image_id)
@@ -22,17 +33,7 @@ module.exports = function (app) {
                 url: data[0].url
             });
         });
-        app.get('/api/v1/lodging_image/lodging/:lodging_id', (req, res) => {
-            console.log("params: ", req.params.lodging_id);
-            LodgingImg.getimagelodging(req.params.lodging_id,(err, data) => {
-                if(err){
-                    throw err
-                }else{
-                    res.status(200).json(data);
-                }
-                
-            });
-        });
+        
     });
     app.post('/api/v1/lodging_image',/*[
         check('country').isString(),
