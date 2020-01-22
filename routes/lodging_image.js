@@ -22,6 +22,17 @@ module.exports = function (app) {
                 url: data[0].url
             });
         });
+        app.get('/api/v1/lodging_image/lodging/:lodging_id', (req, res) => {
+            console.log("params: ", req.params.lodging_id);
+            LodgingImg.getimagelodging(req.params.lodging_id,(err, data) => {
+                if(err){
+                    throw err
+                }else{
+                    res.status(200).json(data);
+                }
+                
+            });
+        });
     });
     app.post('/api/v1/lodging_image',/*[
         check('country').isString(),

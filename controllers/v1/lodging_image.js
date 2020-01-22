@@ -1,19 +1,40 @@
 const mysql = require('mysql');
 
 
-connection = mysql.createConnection({
+/*connection = mysql.createConnection({
     host            : process.env.DATABASE_HOST,
     port            : process.env.MYSQL_PORT,
     user            : process.env.MYSQL_USER,
     password        : process.env.MYSQL_PASSWORD,
     database        : process.env.MYSQL_DATABASE
-});
+});*/
+
+var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : 'root',
+    database : 'lodging'
+  });
 
 let LodgingImgModel = {};
 LodgingImgModel.getlodgingimg = (callback) => {
     if (connection) {
         connection.query(
             'SELECT * FROM lodging_image ORDER BY lodging_image_id',
+            (err, rows) => {
+                if (err) {
+                    throw err
+                } else {
+                    callback(null, rows)
+                }
+            }
+        )
+    }
+}
+LodgingImgModel.getimagelodging= (lodging_id,callback) => {
+    if (connection) {
+        connection.query(
+            'SELECT * FROM lodging_image where lodging_id=?',lodging_id,
             (err, rows) => {
                 if (err) {
                     throw err
@@ -39,6 +60,7 @@ LodgingImgModel.getlodgingimgcode = (lodgingImgData,callback) => {
         )
     }
 }
+
 LodgingImgModel.insertlodgingimg = (lodgingImgData, callback) => {
     if (connection) {
         connection.query(
